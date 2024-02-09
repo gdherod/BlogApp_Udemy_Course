@@ -24,32 +24,51 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val password = binding.editTextPassword.text.toString().trim()
             val confirmPassword = binding.editTextConfirmPassword.text.toString().trim()
 
-            if (password != confirmPassword) {
-                binding.editTextConfirmPassword.error = "Password does not match"
-                binding.editTextPassword.error = "Password does not match"
-                return@setOnClickListener
-            }
-
-            when {
-                username.isEmpty() -> {
-                    binding.editTextUserName.error = "UserName is empty"
-                    return@setOnClickListener
-                }
-                email.isEmpty() -> {
-                    binding.editTextEmail.error = "E-mail is empty"
-                    return@setOnClickListener
-                }
-                password.isEmpty() -> {
-                    binding.editTextPassword.error = "Password is empty"
-                    return@setOnClickListener
-                }
-                confirmPassword.isEmpty() -> {
-                    binding.editTextConfirmPassword.error = "Confirm password is empty"
-                    return@setOnClickListener
-                }
-            }
+            if (validateUserData(
+                    username,
+                    email,
+                    password,
+                    confirmPassword
+                )
+            ) return@setOnClickListener
 
             Log.d("signUpDate", "data: $username $email $password $confirmPassword")
         }
+    }
+
+    private fun validateUserData(
+        username: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
+        if (password != confirmPassword) {
+            binding.editTextConfirmPassword.error = "Password does not match"
+            binding.editTextPassword.error = "Password does not match"
+            return true
+        }
+
+        when {
+            username.isEmpty() -> {
+                binding.editTextUserName.error = "UserName is empty"
+                return true
+            }
+
+            email.isEmpty() -> {
+                binding.editTextEmail.error = "E-mail is empty"
+                return true
+            }
+
+            password.isEmpty() -> {
+                binding.editTextPassword.error = "Password is empty"
+                return true
+            }
+
+            confirmPassword.isEmpty() -> {
+                binding.editTextConfirmPassword.error = "Confirm password is empty"
+                return true
+            }
+        }
+        return false
     }
 }
