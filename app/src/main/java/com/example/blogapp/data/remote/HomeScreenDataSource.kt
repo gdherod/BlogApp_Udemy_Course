@@ -9,7 +9,7 @@ class HomeScreenDataSource {
 
     suspend fun getLatestPost(): Resource<List<Post>> {
         val postList = mutableListOf<Post>()
-        val querySnapshot = FirebaseFirestore.getInstance().collection("post").get().await()
+        val querySnapshot = FirebaseFirestore.getInstance().collection("posts").get().await()
         for (post in querySnapshot.documents) {
             post.toObject(Post::class.java)?.let { fbPost ->
                 postList.add(fbPost)
