@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.blogapp.R
-import com.example.blogapp.core.Resource
+import com.example.blogapp.core.Result
 import com.example.blogapp.data.remote.home.HomeScreenDataSource
 import com.example.blogapp.databinding.FragmentHomeScreenBinding
 import com.example.blogapp.domain.home.HomeScreenRepoImpl
@@ -32,17 +32,17 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
 
         viewModel.fetchLatestPost().observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is Resource.Loading -> {
+                is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
                 }
 
-                is Resource.Success -> {
+                is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.rvHome.adapter = HomeScreenAdapter(result.data)
 
                 }
 
-                is Resource.Failure -> {
+                is Result.Failure -> {
                     Toast.makeText(
                         requireContext(), "Ocurrio un error: ${result.exception}",
                         Toast.LENGTH_SHORT
