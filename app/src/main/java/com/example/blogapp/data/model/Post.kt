@@ -6,5 +6,6 @@ data class Post(
     val profilePicture: String = "",
     val profileName: String = "",
     val postTimestamp: Timestamp? = null,
-    val postImage: String = ""
+    val postImage: String = "",
+    val postDescription: String = ""
 )
