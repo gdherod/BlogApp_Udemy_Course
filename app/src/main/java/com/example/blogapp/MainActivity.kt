@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private fun observeDestinationChange() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.loginFragment, R.id.registerFragment -> {
+                R.id.loginFragment, R.id.registerFragment, R.id.setupProfileFragment -> {
                     binding.bottomNavigationView.hide()
                 }
 

@@ -39,12 +39,11 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
                 is Result.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.rvHome.adapter = HomeScreenAdapter(result.data)
-
                 }
 
                 is Result.Failure -> {
                     Toast.makeText(
-                        requireContext(), "Ocurrio un error: ${result.exception}",
+                        requireContext(), "Ocurrió un error: ${result.exception}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
