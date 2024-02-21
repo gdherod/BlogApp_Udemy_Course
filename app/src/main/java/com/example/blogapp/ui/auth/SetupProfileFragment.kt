@@ -78,7 +78,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && requestCode == RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             binding.profileImage.setImageBitmap(imageBitmap)
             bitmap = imageBitmap
