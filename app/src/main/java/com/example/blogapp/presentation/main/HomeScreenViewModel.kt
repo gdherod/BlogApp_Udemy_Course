@@ -6,18 +6,19 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.blogapp.core.Result
 import com.example.blogapp.domain.home.HomeScreenRepo
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
 class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
 
-    fun fetchLatestPost() = liveData(viewModelScope.coroutineContext + Dispatchers.Main) {
+    private val dispatcherMain: CoroutineDispatcher = Dispatchers.Main
+
+    fun fetchLatestPost() = liveData(viewModelScope.coroutineContext + dispatcherMain) {
         emit(Result.Loading())
         runCatching {
             repo.getLatestPost()
-        }.onSuccess { flowList ->
-            flowList.collect {
-                emit(it)
-            }
+        }.onSuccess { postList ->
+            emit(postList)
         }.onFailure { throwable ->
             emit(Result.Failure(Exception(throwable.message)))
         }
