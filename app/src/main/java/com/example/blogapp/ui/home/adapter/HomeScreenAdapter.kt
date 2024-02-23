@@ -32,19 +32,34 @@ class HomeScreenAdapter(private val postList: List<Post>) :
         val context: Context
     ) : BaseViewHolder<Post>(binding.root) {
         override fun bind(item: Post) {
-            Glide.with(context).load(item.postImage).centerCrop().into(binding.postImage)
-            Glide.with(context).load(item.profilePicture).centerCrop().into(binding.profilePicture)
-            binding.profileName.text = item.profileName
-            if (item.postDescription.isEmpty()) {
-                binding.postDescription.hide()
-            } else {
-                binding.postDescription.text = item.postDescription
-            }
-            val createdAt = (item.createdAt?.time?.div(1000L))?.let {
+            setupProfileInfo(item)
+            addPostTimeStamp(item)
+            setupPostImage(item)
+            setupPostDescription(item)
+        }
+
+        private fun setupProfileInfo(post: Post) {
+            Glide.with(context).load(post.profilePicture).centerCrop().into(binding.profilePicture)
+            binding.profileName.text = post.profileName
+        }
+
+        private fun addPostTimeStamp(post: Post) {
+            val createdAt = (post.createdAt?.time?.div(1000L))?.let {
                 TimeUtils.getTimeAgo(it.toInt())
             }
             binding.postTimestamp.text = createdAt
         }
 
+        private fun setupPostImage(post: Post) {
+            Glide.with(context).load(post.postImage).centerCrop().into(binding.postImage)
+        }
+
+        private fun setupPostDescription(post: Post) {
+            if (post.postDescription.isEmpty()) {
+                binding.postDescription.hide()
+            } else {
+                binding.postDescription.text = post.postDescription
+            }
+        }
     }
 }
