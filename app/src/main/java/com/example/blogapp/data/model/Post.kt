@@ -6,7 +6,7 @@ import java.util.Date
 
 data class Post(
     @Exclude @JvmField
-    val id: String = "",
+    var id: String = "",
     @ServerTimestamp
     var createdAt: Date? = null,
     val postImage: String = "",

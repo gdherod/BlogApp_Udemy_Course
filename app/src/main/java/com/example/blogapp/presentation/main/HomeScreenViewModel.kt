@@ -23,6 +23,18 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
             emit(Result.Failure(Exception(throwable.message)))
         }
     }
+
+    fun registerLikeButtonState(postId: String, liked: Boolean) =
+        liveData(viewModelScope.coroutineContext + dispatcherMain) {
+            emit(Result.Loading())
+            runCatching {
+                repo.registerLikeButtonState(postId, liked)
+            }.onSuccess {
+                emit(Result.Success(Unit))
+            }.onFailure { throwable ->
+                emit(Result.Failure(Exception(throwable.message)))
+            }
+        }
 }
 
 class HomeScreenViewModelFactory(private val repo: HomeScreenRepo) : ViewModelProvider.Factory {
