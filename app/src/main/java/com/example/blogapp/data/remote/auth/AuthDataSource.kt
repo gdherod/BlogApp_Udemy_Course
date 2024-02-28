@@ -23,7 +23,7 @@ class AuthDataSource {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
         authResult.user?.uid?.let { uid ->
             FirebaseFirestore.getInstance().collection("users").document(uid)
-                .set(User(username, email, "PHOTO_URL.PNG")).await()
+                .set(User(username, email)).await()
         }
         return authResult.user
     }
